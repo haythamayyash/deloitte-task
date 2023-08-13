@@ -1,10 +1,12 @@
 package com.example.deloittetask
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.BaseActivity
+import com.example.deloittetask.presentation.home.dashboard.DashboardFragment
+import com.example.deloittetask.presentation.home.more.MoreFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
     private val dashboardFragment = DashboardFragment()

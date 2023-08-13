@@ -1,82 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="32dp">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/profileImageView"
+        android:id="@+id/image_view_profile"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/ic_launcher_background"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:src="@drawable/ic_launcher_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/fullNameTextView"
+        android:id="@+id/text_view_full_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Full Name"
+        android:layout_marginStart="16dp"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@id/profileImageView"
-        app:layout_constraintStart_toEndOf="@id/profileImageView"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/emailTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/fullNameTextView"
-        app:layout_constraintStart_toEndOf="@id/profileImageView"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/nationalIdTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="National ID: 123456789"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/emailTextView"
-        app:layout_constraintStart_toEndOf="@id/profileImageView"
+        app:layout_constraintBottom_toTopOf="@id/text_view_email"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/nationalIdTextView" />
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/image_view_profile"
+        app:layout_constraintTop_toTopOf="@id/image_view_profile"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="@string/label_full_name" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/phoneNumberTextView"
+        android:id="@+id/text_view_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Phone Number: 123-456-7890"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/nationalIdTextView"
-        app:layout_constraintStart_toEndOf="@id/profileImageView"
+        app:layout_constraintBottom_toBottomOf="@id/image_view_profile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/phoneNumberTextView" />
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/image_view_profile"
+        app:layout_constraintTop_toBottomOf="@id/text_view_full_name"
+        tools:text="@string/label_email" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/dobTextView"
+        android:id="@+id/text_view_details_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date of Birth: Jan 01, 1990"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/phoneNumberTextView"
-        app:layout_constraintStart_toEndOf="@id/profileImageView"
+        android:layout_marginTop="16dp"
+        android:text="@string/label_details"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dashboard_title"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/dobTextView" />
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/image_view_profile"
+        app:layout_constraintTop_toBottomOf="@id/image_view_profile" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/logoutButton"
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_view_national_id_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Logout"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/dobTextView"
-        app:layout_constraintStart_toEndOf="@id/profileImageView"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_marginTop="16dp"
+        android:text="@string/label_national_id"
+        android:textSize="@dimen/dashboard_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/text_view_details_label"
+        app:layout_constraintTop_toBottomOf="@id/text_view_details_label" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_view_national_id_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dashboard_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/text_view_details_label"
+        app:layout_constraintTop_toBottomOf="@id/text_view_national_id_label"
+        tools:text="123456789" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_view_phone_number_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/label_phone_number"
+        android:textSize="@dimen/dashboard_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/text_view_details_label"
+        app:layout_constraintTop_toBottomOf="@id/text_view_national_id_value" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_view_phone_number_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dashboard_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/image_view_profile"
+        app:layout_constraintStart_toStartOf="@id/text_view_details_label"
+        app:layout_constraintTop_toBottomOf="@id/text_view_phone_number_label"
+        tools:text="+962 0000000" />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_view_dob_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/label_date_of_birth"
+        android:textSize="@dimen/dashboard_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/image_view_profile"
+        app:layout_constraintStart_toStartOf="@id/text_view_details_label"
+        app:layout_constraintTop_toBottomOf="@id/text_view_phone_number_value" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_view_dob_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dashboard_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/image_view_profile"
+        app:layout_constraintStart_toStartOf="@id/text_view_details_label"
+        app:layout_constraintTop_toBottomOf="@id/text_view_dob_label"
+        tools:text="Jan 01, 1990" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_view_settings_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/label_settings"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dashboard_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/image_view_profile"
+        app:layout_constraintTop_toBottomOf="@id/text_view_dob_value" />
+
+    <View
+        android:id="@+id/line_separator"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_settings_label" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/button_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="?selectableItemBackground"
+        android:drawableStart="@drawable/ic_logout"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:text="@string/label_logout"
+        android:textSize="@dimen/dashboard_label"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/text_view_settings_label"
+        app:layout_constraintTop_toBottomOf="@id/line_separator" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
