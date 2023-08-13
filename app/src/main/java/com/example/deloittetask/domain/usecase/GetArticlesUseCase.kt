@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetArticlesUseCase @Inject constructor(
     private val articleRepository: ArticleRepository,
 ) {
-    suspend fun execute(): Articles {
-        return articleRepository.getArticle()
+    suspend fun execute(): List<Articles.Article?> {
+        return articleRepository.getArticles()
     }
 }

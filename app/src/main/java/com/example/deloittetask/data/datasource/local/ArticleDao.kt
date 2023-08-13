@@ -9,11 +9,11 @@ import com.example.deloittetask.data.model.Articles
 interface ArticleDao {
 
     @Insert
-    suspend fun insertArticle(users: Articles)
+    suspend fun insertArticle(articles: List<Articles.Article?>)
 
-    @Query("SELECT * FROM Articles")
-    suspend fun getArticle(): Articles
+    @Query("SELECT * FROM article")
+    suspend fun getArticle(): List<Articles.Article>
 
-    @Query("DELETE FROM Articles")
+    @Query("DELETE FROM article")
     suspend fun deleteArticles()
 }

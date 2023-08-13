@@ -6,11 +6,11 @@ import javax.inject.Inject
 
 class ArticleLocalDataSourceImpl @Inject constructor(private val articleDao: ArticleDao) :
     ArticleLocalDataSource {
-    override suspend fun getArticles(): Articles {
+    override suspend fun getArticles(): List<Articles.Article> {
         return articleDao.getArticle()
     }
 
-    override suspend fun insertArticles(articles: Articles) {
+    override suspend fun insertArticles(articles: List<Articles.Article?>) {
         articleDao.insertArticle(articles)
     }
 

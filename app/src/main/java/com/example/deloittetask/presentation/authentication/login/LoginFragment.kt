@@ -12,11 +12,10 @@ import com.example.deloittetask.BaseFragment
 import com.example.deloittetask.MainActivity
 import com.example.deloittetask.R
 import com.example.deloittetask.databinding.FragmentLoginBinding
-import com.example.deloittetask.presentation.authentication.registration.RegistrationViewModel
 import com.example.deloittetask.util.DeloitteError
 import com.example.deloittetask.util.debounceClick
 import com.example.deloittetask.util.showToast
-import com.example.deloittetask.util.validation.validator.EmailValidator
+import com.example.deloittetask.util.validation.rule.MinRule
 import com.example.deloittetask.util.validation.validator.PasswordValidator
 import com.example.deloittetask.util.validation.validator.Validator
 import com.google.android.material.textfield.TextInputLayout
@@ -29,8 +28,12 @@ class LoginFragment private constructor() : BaseFragment() {
     private val binding get() = _binding!!
     private val viewModel by viewModels<LoginViewModel>()
 
-    private lateinit var emailValidator: Validator
     private lateinit var passwordValidator: Validator
+    private val emailValidator by lazy {
+        Validator().apply {
+            addRule(MinRule(requireContext(), MIN_EMAIL_LOGIN))
+        }
+    }
 
     private val fieldsValidationResult = hashMapOf(
         R.id.text_input_layout_email to false, R.id.text_input_layout_password to false
@@ -66,7 +69,6 @@ class LoginFragment private constructor() : BaseFragment() {
     }
 
     private fun initValidators() {
-        emailValidator = EmailValidator(requireContext())
         passwordValidator = PasswordValidator(requireContext())
     }
 
@@ -197,15 +199,20 @@ class LoginFragment private constructor() : BaseFragment() {
             is DeloitteError.NoInternetConnection -> showToast(getString(R.string.error_no_internet_message))
             is DeloitteError.ServerError -> showToast(state.deloitteError.errorMessage)
             is DeloitteError.TimeOutConnection -> showToast(getString(R.string.error_timeout_error_message))
-            is DeloitteError.LocalError -> handleLocalError()
+            is DeloitteError.LocalError -> handleLocalError(state.deloitteError)
         }
     }
 
-    private fun handleLocalError() {
-        //TODO add impl
+    private fun handleLocalError(deloitteError: DeloitteError.LocalError) {
+        if (deloitteError.errorCode == LoginViewModel.ERROR_CODE_WRONG_EMAIL_OR_PASSWORD) {
+            showToast(getString(R.string.error_wrong_email_or_password))
+        } else {
+            showToast(getString(R.string.error_generic_message))
+        }
     }
 
     companion object {
+        const val MIN_EMAIL_LOGIN = 1
         fun newInstance() = LoginFragment()
     }
 }

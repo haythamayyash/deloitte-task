@@ -1,6 +1,5 @@
 package com.example.deloittetask.util
 
-import android.os.Parcelable
 import java.io.IOException
 import java.net.ConnectException
 import java.net.NoRouteToHostException
@@ -27,7 +26,7 @@ val Throwable.isConnectionTimeoutException: Boolean
             this is SocketTimeoutException ||
             this.cause?.isConnectionException ?: false
 
-fun Throwable.mapToDeloitteError(errorCode: Int? = null): DeloitteError {
+fun Throwable.mapToDeloitteError(): DeloitteError {
     return when {
         isConnectionException -> {
             DeloitteError.NoInternetConnection

@@ -17,6 +17,7 @@
     <string name="label_logout">Logout</string>
     <string name="label_date_of_birth">Date of Birth</string>
     <string name="error_user_already_exist">This National Id  or Email are wrong or already used</string>
+    <string name="error_wrong_email_or_password">Wrong Email or Password</string>
     <string name="button_register">Register</string>
     <string name="label_prompt_logout">Do you want to logout?</string>
     <string name="label_cancel">Cancel</string>

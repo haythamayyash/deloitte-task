@@ -6,9 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.deloittetask.BaseViewModel
 import com.example.deloittetask.domain.model.User
 import com.example.deloittetask.domain.usecase.GetUserDataUseCase
-import com.example.deloittetask.domain.usecase.GetUserNationalIdUseCase
 import com.example.deloittetask.domain.usecase.LogoutUseCase
-import com.example.deloittetask.presentation.authentication.login.LoginViewModel
 import com.example.deloittetask.util.DeloitteError
 import com.example.deloittetask.util.SingleLiveData
 import com.example.deloittetask.util.mapToDeloitteError

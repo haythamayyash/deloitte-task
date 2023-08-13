@@ -2,88 +2,113 @@ package com.example.deloittetask.data.model
 
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity
+
 data class Articles(
     @SerializedName("copyright")
-    val copyright: String?,
+    var copyright: String?,
     @SerializedName("num_results")
-    val numResults: Int?,
+    var numResults: Int?,
     @SerializedName("results")
-    val results: List<Result?>?,
+    var articles: List<Article?>?,
     @SerializedName("status")
-    val status: String?
+    var status: String?
 ) {
-    data class Result(
+    @Entity
+    data class Article(
         @SerializedName("abstract")
-        val `abstract`: String?,
+        var `abstract`: String?,
         @SerializedName("adx_keywords")
-        val adxKeywords: String?,
+        var adxKeywords: String?,
         @SerializedName("asset_id")
-        val assetId: Long?,
+        var assetId: Long?,
         @SerializedName("byline")
-        val byline: String?,
-        @SerializedName("column")
-        val column: Any?,
+        var byline: String?,
         @SerializedName("des_facet")
-        val desFacet: List<String?>?,
+        var desFacet: List<String?>?,
         @SerializedName("eta_id")
-        val etaId: Int?,
+        var etaId: Int?,
         @SerializedName("geo_facet")
-        val geoFacet: List<String?>?,
+        var geoFacet: List<String?>?,
         @SerializedName("id")
-        val id: Long?,
+        @PrimaryKey
+        var id: Long?,
         @SerializedName("media")
-        val media: List<Media?>?,
+        var media: List<Media?>?,
         @SerializedName("nytdsection")
-        val nytdsection: String?,
+        var nytdsection: String?,
         @SerializedName("org_facet")
-        val orgFacet: List<String?>?,
+        var orgFacet: List<String?>?,
         @SerializedName("per_facet")
-        val perFacet: List<String?>?,
+        var perFacet: List<String?>?,
         @SerializedName("published_date")
-        val publishedDate: String?,
+        var publishedDate: String?,
         @SerializedName("section")
-        val section: String?,
+        var section: String?,
         @SerializedName("source")
-        val source: String?,
+        var source: String?,
         @SerializedName("subsection")
-        val subsection: String?,
+        var subsection: String?,
         @SerializedName("title")
-        val title: String?,
+        var title: String?,
         @SerializedName("type")
-        val type: String?,
+        var type: String?,
         @SerializedName("updated")
-        val updated: String?,
+        var updated: String?,
         @SerializedName("uri")
-        val uri: String?,
+        var uri: String?,
         @SerializedName("url")
-        val url: String?
+        var url: String?
     ) {
+        constructor() : this(
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+
         data class Media(
             @SerializedName("approved_for_syndication")
-            val approvedForSyndication: Int?,
+            var approvedForSyndication: Int?,
             @SerializedName("caption")
-            val caption: String?,
+            var caption: String?,
             @SerializedName("copyright")
-            val copyright: String?,
+            var copyright: String?,
             @SerializedName("media-metadata")
-            val mediaMetadata: List<MediaMetadata?>?,
+            var mediaMetadata: List<MediaMetadata?>?,
             @SerializedName("subtype")
-            val subtype: String?,
+            var subtype: String?,
             @SerializedName("type")
-            val type: String?
+            var type: String?
         ) {
             data class MediaMetadata(
                 @SerializedName("format")
-                val format: String?,
+                var format: String?,
                 @SerializedName("height")
-                val height: Int?,
+                var height: Int?,
                 @SerializedName("url")
-                val url: String?,
+                var url: String?,
                 @SerializedName("width")
-                val width: Int?
+                var width: Int?
             )
         }
     }

@@ -1,5 +1,6 @@
 package com.example.deloittetask.presentation.authentication.login
 
+import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -27,16 +28,22 @@ class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase)
 
     fun login(email: String, password: String) {
         val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+            if (throwable is WrongEmailOrPasswordException) {
+                _viewState.value = LoginViewState.Failure(
+                    DeloitteError.LocalError(ERROR_CODE_WRONG_EMAIL_OR_PASSWORD)
+                )
+                return@CoroutineExceptionHandler
+            }
             _viewState.value = LoginViewState.Failure(throwable.mapToDeloitteError())
         }
 
         viewModelScope.launch(exceptionHandler) {
             _viewState.value = LoginViewState.Loading
             withContext(Dispatchers.IO) {
-                loginUseCase.execute(email, password)!!
+                val user = loginUseCase.execute(email, password) ?: throw WrongEmailOrPasswordException()
             }
             _viewState.value = LoginViewState.Success
-            events.value = LoginViewModel.LoginEvent.OpenHome
+            events.value = LoginEvent.OpenHome
         }
     }
 
@@ -49,4 +56,8 @@ class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase)
     sealed class LoginEvent {
         object OpenHome : LoginEvent()
     }
+    companion object{
+        const val ERROR_CODE_WRONG_EMAIL_OR_PASSWORD = 1556
+    }
+    class WrongEmailOrPasswordException: Exception()
 }
