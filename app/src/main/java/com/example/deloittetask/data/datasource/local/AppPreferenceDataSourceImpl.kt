@@ -1,7 +1,7 @@
-package com.example.deloittetask.data.local
+package com.example.deloittetask.data.datasource.local
 
 import android.content.SharedPreferences
-import com.example.deloittetask.data.AppPreferenceDataSource
+import com.example.deloittetask.data.datasource.AppPreferenceDataSource
 import javax.inject.Inject
 
 class AppPreferenceDataSourceImpl @Inject constructor(private val prefs: SharedPreferences) :
@@ -17,6 +17,10 @@ class AppPreferenceDataSourceImpl @Inject constructor(private val prefs: SharedP
         set(value) {
             putBoolean(KEY_PREF_IS_USER_LOGGED_IN, value ?: false)
         }
+
+    override fun clearSession() {
+        prefs.edit().clear().apply()
+    }
 
     private fun putBoolean(key: String, value: Boolean) {
         prefs.edit().putBoolean(key, value).apply()

@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.deloittetask.BaseViewModel
 import com.example.deloittetask.domain.usecase.LoginUseCase
+import com.example.deloittetask.presentation.authentication.registration.RegistrationViewModel
 import com.example.deloittetask.util.DeloitteError
+import com.example.deloittetask.util.SingleLiveData
 import com.example.deloittetask.util.mapToDeloitteError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -20,6 +22,7 @@ class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase)
 
     private val _viewState = MutableLiveData<LoginViewState>()
     val viewState: LiveData<LoginViewState> = _viewState
+    val events = SingleLiveData<LoginEvent>()
 
 
     fun login(email: String, password: String) {
@@ -30,9 +33,10 @@ class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase)
         viewModelScope.launch(exceptionHandler) {
             _viewState.value = LoginViewState.Loading
             withContext(Dispatchers.IO) {
-                loginUseCase.execute(email, password)
+                loginUseCase.execute(email, password)!!
             }
             _viewState.value = LoginViewState.Success
+            events.value = LoginViewModel.LoginEvent.OpenHome
         }
     }
 
@@ -40,5 +44,9 @@ class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase)
         object Loading : LoginViewState()
         object Success : LoginViewState()
         data class Failure(val deloitteError: DeloitteError) : LoginViewState()
+    }
+
+    sealed class LoginEvent {
+        object OpenHome : LoginEvent()
     }
 }

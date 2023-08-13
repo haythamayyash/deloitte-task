@@ -1,4 +1,4 @@
-package com.example.deloittetask.data.local
+package com.example.deloittetask.data.datasource.local
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -8,13 +8,13 @@ import com.example.deloittetask.domain.model.User
 @Dao
 interface AuthenticationDao {
     @Insert
-    fun insertUsers(users: User)
+    suspend fun insertUsers(users: User)
 
     @Query("SELECT * FROM User WHERE email=:email AND password=:password")
-    fun getUser(email: String, password: String): User
+    suspend fun getUser(email: String, password: String): User
 
     @Query("SELECT * FROM User WHERE nationalId=:id")
-    fun getUser(id: Long): User
+    suspend fun getUser(id: Long): User
 
 
 }

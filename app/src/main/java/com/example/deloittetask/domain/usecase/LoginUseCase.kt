@@ -13,6 +13,7 @@ class LoginUseCase @Inject constructor(
         val user = authenticationRepository.getUser(email, password)
         user?.let {
             appPreferenceRepository.isLoggedIn = true
+            appPreferenceRepository.nationalId = user.nationalId
         }
         return user
     }

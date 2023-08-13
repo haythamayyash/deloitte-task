@@ -1,12 +1,11 @@
 package com.example.deloittetask.data.repository
 
-import com.example.deloittetask.data.local.AuthenticationDao
-import com.example.deloittetask.data.local.AuthenticationLocalDataSource
+import com.example.deloittetask.data.datasource.local.AuthenticationLocalLocalDataSourceImpl
 import com.example.deloittetask.domain.model.User
 import com.example.deloittetask.domain.repository.AuthenticationRepository
 import javax.inject.Inject
 
-class AuthenticationRepositoryImpl @Inject constructor(private val authenticationLocalDataSource: AuthenticationLocalDataSource) :
+class AuthenticationRepositoryImpl @Inject constructor(private val authenticationLocalDataSource: AuthenticationLocalLocalDataSourceImpl) :
     AuthenticationRepository {
     override suspend fun insertUser(user: User) {
         authenticationLocalDataSource.insertUser(user)

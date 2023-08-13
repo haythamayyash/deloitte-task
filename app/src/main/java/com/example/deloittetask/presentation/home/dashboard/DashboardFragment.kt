@@ -8,10 +8,14 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.deloittetask.BaseFragment
+import com.example.deloittetask.MainActivity
 import com.example.deloittetask.R
 import com.example.deloittetask.databinding.FragmentDashboardBinding
+import com.example.deloittetask.presentation.splash.RoutingActivity
 import com.example.deloittetask.util.DeloitteError
+import com.example.deloittetask.util.debounceClick
 import com.example.deloittetask.util.showToast
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class DashboardFragment : BaseFragment() {
 
@@ -26,6 +30,12 @@ class DashboardFragment : BaseFragment() {
         }
     }
 
+    private val eventObserver: Observer<DashboardViewModel.DashboardEvent?> by lazy {
+        Observer { state ->
+            handleEvents(state)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,12 +46,20 @@ class DashboardFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initListeners()
         observeChanges()
     }
 
-
     private fun observeChanges() {
         viewModel.viewState.observe(viewLifecycleOwner, viewStateObserver)
+        viewModel.events.observe(viewLifecycleOwner, eventObserver)
+    }
+
+
+    private fun initListeners() {
+        binding.buttonLogout.debounceClick {
+            showLogoutDialog()
+        }
     }
 
     private fun handleViewState(state: DashboardViewModel.DashboardViewState?) {
@@ -65,6 +83,18 @@ class DashboardFragment : BaseFragment() {
 
     }
 
+    private fun handleEvents(state: DashboardViewModel.DashboardEvent?) {
+        when (state) {
+            is DashboardViewModel.DashboardEvent.OpenRouting -> {
+                RoutingActivity.startActivity(requireContext())
+            }
+
+            else -> {
+                //Nothing to do here
+            }
+        }
+    }
+
     private fun handleSuccessState(state: DashboardViewModel.DashboardViewState.Success) {
         binding.progressBar.isVisible = false
         binding.textViewFullName.text = state.user.fullName
@@ -86,10 +116,27 @@ class DashboardFragment : BaseFragment() {
     private fun handleError(state: DashboardViewModel.DashboardViewState.Failure) {
         when (state.deloitteError) {
             is DeloitteError.GenericError -> showToast(state.deloitteError.errorMessage)
-            is DeloitteError.NoInternetConnection -> showToast(getString(R.string.no_internet_msg))
+            is DeloitteError.NoInternetConnection -> showToast(getString(R.string.error_no_internet_message))
             is DeloitteError.ServerError -> showToast(state.deloitteError.errorMessage)
-            is DeloitteError.TimeOutConnection -> showToast(getString(R.string.timeout_error_msg))
+            is DeloitteError.TimeOutConnection -> showToast(getString(R.string.error_timeout_error_message))
+            is DeloitteError.LocalError -> handleLocalError()
         }
+    }
+
+    private fun handleLocalError() {
+        //TODO add impl
+    }
+
+    private fun showLogoutDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(null)
+            .setMessage(getString(R.string.label_prompt_logout))
+            .setPositiveButton(
+                getString(R.string.label_logout)
+            ) { _, _ -> viewModel.logout() }
+            .setNegativeButton(
+                getString(R.string.label_cancel)
+            ) { dialog, _ -> dialog.dismiss() }.show()
     }
 
     companion object {

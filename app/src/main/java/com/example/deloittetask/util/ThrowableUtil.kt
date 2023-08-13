@@ -12,6 +12,7 @@ sealed class DeloitteError {
     object TimeOutConnection : DeloitteError()
     data class ServerError(val errorMessage: String) : DeloitteError()
     data class GenericError(val errorMessage: String) : DeloitteError()
+    data class LocalError(val errorCode: Int) : DeloitteError()
 }
 
 
@@ -26,7 +27,7 @@ val Throwable.isConnectionTimeoutException: Boolean
             this is SocketTimeoutException ||
             this.cause?.isConnectionException ?: false
 
-fun Throwable.mapToDeloitteError(): DeloitteError {
+fun Throwable.mapToDeloitteError(errorCode: Int? = null): DeloitteError {
     return when {
         isConnectionException -> {
             DeloitteError.NoInternetConnection

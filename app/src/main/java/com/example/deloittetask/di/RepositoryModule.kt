@@ -1,14 +1,20 @@
 package com.example.deloittetask.di
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.deloittetask.data.AppPreferenceDataSource
-import com.example.deloittetask.data.local.AppPreferenceDataSourceImpl
-import com.example.deloittetask.data.local.AuthenticationLocalDataSource
+import com.example.deloittetask.data.datasource.ArticleLocalDataSource
+import com.example.deloittetask.data.datasource.ArticleRemoteDataSource
+import com.example.deloittetask.data.datasource.local.AppPreferenceDataSourceImpl
+import com.example.deloittetask.data.datasource.local.ArticleDao
+import com.example.deloittetask.data.datasource.local.ArticleLocalDataSourceImpl
+import com.example.deloittetask.data.datasource.local.AuthenticationLocalLocalDataSourceImpl
+import com.example.deloittetask.data.datasource.remote.ApiService
+import com.example.deloittetask.data.datasource.remote.ArticleRemoteDataSourceImpl
 import com.example.deloittetask.data.repository.AppPreferenceRepositoryImpl
+import com.example.deloittetask.data.repository.ArticleRepositoryImpl
 import com.example.deloittetask.data.repository.AuthenticationRepositoryImpl
 import com.example.deloittetask.domain.repository.AppPreferenceRepository
+import com.example.deloittetask.domain.repository.ArticleRepository
 import com.example.deloittetask.domain.repository.AuthenticationRepository
 import dagger.Module
 import dagger.Provides
@@ -27,7 +33,7 @@ class RepositoryModule {
     }
 
     @Provides
-    fun provideAuthenticationRepository(authenticationLocalDataSource: AuthenticationLocalDataSource): AuthenticationRepository {
+    fun provideAuthenticationRepository(authenticationLocalDataSource: AuthenticationLocalLocalDataSourceImpl): AuthenticationRepository {
         return AuthenticationRepositoryImpl(authenticationLocalDataSource)
     }
 
@@ -37,5 +43,25 @@ class RepositoryModule {
         return AppPreferenceRepositoryImpl(appPreferenceDataSource)
     }
 
+    @Provides
+    fun provideArticleLocalDataSource(
+        articleDao: ArticleDao
+    ): ArticleLocalDataSource {
+        return ArticleLocalDataSourceImpl(articleDao)
+    }
 
+    @Provides
+    fun provideArticleRemoteDataSource(
+        apiService: ApiService
+    ): ArticleRemoteDataSource {
+        return ArticleRemoteDataSourceImpl(apiService)
+    }
+
+    @Provides
+    fun provideArticleRepository(
+        articleLocalDataSource: ArticleLocalDataSource,
+        articleRemoteDataSource: ArticleRemoteDataSource
+    ): ArticleRepository {
+        return ArticleRepositoryImpl(articleLocalDataSource, articleRemoteDataSource)
+    }
 }

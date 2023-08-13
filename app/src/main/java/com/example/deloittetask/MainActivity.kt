@@ -1,4 +1,7 @@
 package com.example.deloittetask
+
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.deloittetask.presentation.home.dashboard.DashboardFragment
@@ -19,6 +22,7 @@ class MainActivity : BaseActivity() {
                     switchFragment(dashboardFragment)
                     return@OnNavigationItemSelectedListener true
                 }
+
                 R.id.bottom_nav_more -> {
                     switchFragment(profileFragment)
                     return@OnNavigationItemSelectedListener true
@@ -41,5 +45,11 @@ class MainActivity : BaseActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, fragment)
             .commit()
+    }
+
+    companion object {
+        fun startActivity(context: Context) {
+            context.startActivity(Intent(context, MainActivity::class.java))
+        }
     }
 }

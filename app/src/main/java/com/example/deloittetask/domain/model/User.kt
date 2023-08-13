@@ -1,9 +1,10 @@
 package com.example.deloittetask.domain.model
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(indices = [Index(value = ["email"], unique = true)])
 data class User(
     val email: String,
     val fullName: String,

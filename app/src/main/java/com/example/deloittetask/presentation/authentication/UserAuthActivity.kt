@@ -1,7 +1,9 @@
 package com.example.deloittetask.presentation.authentication
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.deloittetask.R
 import com.example.deloittetask.TabAdapter
@@ -20,5 +22,12 @@ class UserAuthActivity : AppCompatActivity() {
         viewPager.adapter = adapter
         tabLayout.setupWithViewPager(viewPager)
 
+    }
+
+
+    companion object {
+        fun startActivity(context: Context) {
+            context.startActivity(Intent(context, UserAuthActivity::class.java))
+        }
     }
 }
